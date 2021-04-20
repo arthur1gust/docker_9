@@ -1,0 +1,11 @@
+---
+# handlers file for prod
+- name: start tomcat
+  service: 
+    name: tomcat9
+    state: started
+
+- name: restart tomcat
+  service: 
+    name: tomcat9
+    state: restarted

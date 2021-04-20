@@ -1,0 +1,30 @@
+---
+# tasks file for build
+- name: install git, jdk, maven
+  apt: name={{item}} state=present
+  become: yes
+  with_items:
+    - git
+    - default-jdk
+    - maven
+
+- name: git clone project "boxfuse"
+  git:
+    repo: https://github.com/boxfuse/boxfuse-sample-java-war-hello.git
+    dest: /usr/local/project
+    clone: yes
+
+- name: start mvn
+  shell: cd /usr/local/project/ && mvn clean install
+  become: yes
+  register: project_result
+
+- name: mvn result
+  debug:
+    var: project_result
+
+- name: file.war to prod
+  fetch:
+    src: /usr/local/project/target/hello-1.0.war
+    dest: /tmp/project/
+    flat: yes

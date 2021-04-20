@@ -1,0 +1,11 @@
+---
+# tasks file for prod
+- name: install Tomcat-9
+  apt:
+    name: tomcat9
+    state: present
+
+- name: file.war to Tomcat
+  copy:
+    src: /tmp/project/hello-1.0.war
+    dest: /var/lib/tomcat9/webapps/
